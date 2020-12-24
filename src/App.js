@@ -1,24 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './Components/Home/Navbar/Navbar';
+import ListOfAllPlanet from './Components/Home/ListOfAllPlanet/ListOfAllPlanet';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import FavoritesList from './Components/Home/FavoritesList/FavoritesList';
+import { createContext, useState } from 'react';
+
+export const UserContext = createContext();
 
 function App() {
+  const [ planet, setPlanet] = useState({
+    name: '',
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={[planet, setPlanet]}>
+    <Router>
+      <div>
+        <Navbar />
+        <Switch>
+            <Route exact path="/" component={ListOfAllPlanet}/>
+            <Route exact path="/listOfAllPlanet" component={ListOfAllPlanet}/>
+            <Route exact path="/favoritesList" component={FavoritesList}/>
+           
+        </Switch>
+      </div>
+    </Router>
+    </UserContext.Provider>
+   
   );
 }
 
