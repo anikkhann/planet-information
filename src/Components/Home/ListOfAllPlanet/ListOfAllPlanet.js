@@ -3,15 +3,13 @@ import './ListOfAllPlanet.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../../../App';
-import FavoritesList from '../FavoritesList/FavoritesList';
 
 
 const ListOfAllPlanet = () => {
     const [planetList, setPlanetList] = useState([]);
-    const [favoritesList, setFavoriteList] = useState([]);
     const [planet, setPlanet] = useContext(UserContext);
     // console.log(favoritesList);
-    console.log(planet);
+    // console.log(planet);
 
     useEffect(() => {
         fetch('https://assignment-machstatz.herokuapp.com/planet')
@@ -21,12 +19,13 @@ const ListOfAllPlanet = () => {
 
     const addToFavoritesList = (list) => {
         //  console.log(list);
-
-        setPlanet([...favoritesList, list]);
+        list.isFavourite = !(list.isFavourite);
+        setPlanet([...planet, list]);
         //  setFavoriteList([...favoritesList,list]);
-
+        
 
     }
+    
 
     return (
         <div className="container">
@@ -41,7 +40,7 @@ const ListOfAllPlanet = () => {
                             <div className="card-body text-center">
                                 <h5 className="card-title">{list.name}</h5>
                                 <p className="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, accusamus?</p>
-                                <button onClick={() => addToFavoritesList(list)} href="#" className="btn btn-outline-danger">Mark As Favorite</button>
+                                <button onClick={() => addToFavoritesList(list)} href="#" className={`${list.isFavourite ? "btn-secondary"  : "btn-outline-danger" } btn `}>Mark As Favorite</button>
                             </div>
                         </div>
 
@@ -49,11 +48,7 @@ const ListOfAllPlanet = () => {
                 }
 
             </div>
-            <div>
-                {
-                    favoritesList.map(el => <FavoritesList item={el}></FavoritesList>)
-                }
-            </div>
+           
 
         </div>
 

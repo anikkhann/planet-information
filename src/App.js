@@ -8,9 +8,7 @@ import { createContext, useState } from 'react';
 export const UserContext = createContext();
 
 function App() {
-  const [ planet, setPlanet] = useState({
-    name: '',
-  });
+  const [ planet, setPlanet] = useState([]);
   return (
     <UserContext.Provider value={[planet, setPlanet]}>
     <Router>
